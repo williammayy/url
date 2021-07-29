@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Url;
+
 class UrlControlador extends Controller
 {
     /**
@@ -11,10 +12,16 @@ class UrlControlador extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function indexView()
     {
         $urls=Url::all();
         return view('inicio', compact('urls'));
+    }
+
+    public function index()
+    {
+        $urls=Url::all();
+        return json_encode($urls);
     }
 
     /**

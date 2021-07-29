@@ -14,5 +14,5 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [UrlControlador::class,'index']);
+Route::get('/', [UrlControlador::class,'indexView']);
 Route::post('/', [UrlControlador::class,'store']);

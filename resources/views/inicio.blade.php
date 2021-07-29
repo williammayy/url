@@ -32,32 +32,50 @@
                     <h5 class="card-title">
                         URLs cadastradas
                     </h5>
-                    <table class="table table-ordered table-hover">
+                    <table class="table table-ordered table-hover" id="tabelaUrl">
                         <thead>
                             <tr>
                                 <th>URL</th>
-                                <th>Status <button class="btn btn-outline-dark btn-sm">Atualizar</button></th>
+                                <th>Status <button class="btn btn-sm btn-outline-dark ">Atualizar</button></th>
                                 <th>Visualização</th>
                                 <th>Ação</th>
                             </tr>
                         </thead>
                         <tbody>
-@foreach($urls as $url)
-                            <tr>
-                                <td>{{$url->endereco}}</td>
-                                <td><div></div></td>
-                                <td><div></div></td>
-                                <td>
-                                    <button class="btn btn-primary btn-sm">Editar</button>
-                                    <button class="btn btn-danger btn-sm">Apagar</button>
-                                </td>
-                            </tr>
-@endforeach
+
                         </tbody>
                     </table>
                 </div>
             </div>
         </div>
         <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
+        <script type="text/javascript">
+
+
+            function montarLinha(url) {
+var linha = "<tr>" +
+                "<td>" + url.endereco + "</td>" +
+                "<td>" + "</td>" +
+                "<td>" + "</td>" +
+                "<td>" +
+              '<button class="btn btn-primary btn-sm" onclick="editar(' + url.id + ')"> Editar </button> ' +
+              '<button class="btn btn-sm btn-danger" onclick="remover(' + url.id + ')"> Apagar </button> ' +
+            "</td>" +
+            "</tr>";
+        return linha;
+    }
+            function carregarUrls(){
+                $.getJSON('/api/', function(urls) {
+                for(i=0;i<urls.length;i++) {
+                    linha = montarLinha(urls[i]);
+                    $('#tabelaUrl>tbody').append(linha);
+                }
+                });
+            }
+
+            $(function(){
+                carregarUrls();
+            })
+        </script>
     </body>
 </html>
