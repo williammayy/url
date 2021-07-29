@@ -36,10 +36,24 @@
                         <thead>
                             <tr>
                                 <th>URL</th>
-                                <th>Status</th>
+                                <th>Status <button class="btn btn-outline-dark btn-sm">Atualizar</button></th>
                                 <th>Visualização</th>
+                                <th>Ação</th>
                             </tr>
                         </thead>
+                        <tbody>
+@foreach($urls as $url)
+                            <tr>
+                                <td>{{$url->endereco}}</td>
+                                <td><div></div></td>
+                                <td><div></div></td>
+                                <td>
+                                    <button class="btn btn-primary btn-sm">Editar</button>
+                                    <button class="btn btn-danger btn-sm">Apagar</button>
+                                </td>
+                            </tr>
+@endforeach
+                        </tbody>
                     </table>
                 </div>
             </div>
