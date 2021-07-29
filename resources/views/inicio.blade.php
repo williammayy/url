@@ -10,16 +10,17 @@
                 margin-top: 10px;
             }
         </style>
+
     </head>
     <body>
         <div class="container">
 
             <h2 class="text-center">Cadastre sua URL</h2>
-            <form action="">
-
+            <form action="/" method="POST">
+                @csrf
 
                 <div class="input-group input-group-lg">
-                    <input type="text" class="form-control border-primary" placeholder="https://exemplo.com.br">
+                    <input name="enderecoUrl" type="text" class="form-control border-primary" placeholder="https://exemplo.com.br">
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="submit">Cadastrar</button>
                     </div>

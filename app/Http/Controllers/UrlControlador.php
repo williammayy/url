@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-
+use App\Models\Url;
 class UrlControlador extends Controller
 {
     /**
@@ -13,7 +13,8 @@ class UrlControlador extends Controller
      */
     public function index()
     {
-        return view('inicio');
+        $urls=Url::all();
+        return view('inicio', compact('urls'));
     }
 
     /**
@@ -34,7 +35,10 @@ class UrlControlador extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $url=new Url();
+        $url->endereco=$request->input('enderecoUrl');
+        $url->save();
+        return redirect('/');
     }
 
     /**

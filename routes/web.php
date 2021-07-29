@@ -15,3 +15,4 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [UrlControlador::class,'index']);
+Route::post('/', [UrlControlador::class,'store']);
