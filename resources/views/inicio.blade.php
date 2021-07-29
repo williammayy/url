@@ -26,7 +26,23 @@
                 </div>
             </form>
 
+            <div class="card border" style="margin-top:20px;">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        URLs cadastradas
+                    </h5>
+                    <table class="table table-ordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>URL</th>
+                                <th>Status</th>
+                                <th>Visualização</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </div>
+            </div>
         </div>
-        <script src="{{asset('js/app.js')}}"></script>
+        <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
     </body>
 </html>
