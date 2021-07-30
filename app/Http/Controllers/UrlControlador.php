@@ -90,6 +90,11 @@ class UrlControlador extends Controller
      */
     public function destroy($id)
     {
-        //
+        $url=Url::find($id);
+        if (isset($url)){
+            $url->delete();
+            return response('OK',200);
+        }
+        return response('Url não encontrada',400);
     }
 }

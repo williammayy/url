@@ -35,6 +35,7 @@
                     <table class="table table-ordered table-hover" id="tabelaUrl">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>URL</th>
                                 <th>Status <button class="btn btn-sm btn-outline-dark ">Atualizar</button></th>
                                 <th>Visualização</th>
@@ -48,12 +49,21 @@
                 </div>
             </div>
         </div>
+
         <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
+
         <script type="text/javascript">
 
 
+            $.ajaxSetup({
+                headers:{
+                    'X-CSRF-TOKEN':"{{csrf_token()}}"
+                }
+            });
+
             function montarLinha(url) {
 var linha = "<tr>" +
+                "<td>" + url.id + "</td>" +
                 "<td>" + url.endereco + "</td>" +
                 "<td>" + "</td>" +
                 "<td>" + "</td>" +
@@ -64,8 +74,30 @@ var linha = "<tr>" +
             "</tr>";
         return linha;
     }
+
+    function remover(id) {
+        $.ajax({
+            type: "DELETE",
+            url: "/api/url/"+id,
+            context: this,
+            success: function() {
+
+                linhas = $("#tabelaUrl>tbody>tr");
+                e = linhas.filter( function(i, elemento) {
+                    return elemento.cells[0].textContent == id;
+                });
+                if (e)
+                    e.remove();
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+
+
             function carregarUrls(){
-                $.getJSON('/api/', function(urls) {
+                $.getJSON('/api/url', function(urls) {
                 for(i=0;i<urls.length;i++) {
                     linha = montarLinha(urls[i]);
                     $('#tabelaUrl>tbody').append(linha);
