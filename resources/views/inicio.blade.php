@@ -50,6 +50,32 @@
             </div>
         </div>
 
+        <div class="modal" tabindex="-1" role="dialog" id="dlgUrl">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form class="form-horizontal" id="formUrl">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Editar Url</h5>
+                        </div>
+                        <div class="modal-body">
+
+                            <input type="hidden" id="id" class="form-control">
+                            <div class="form-group">
+                                <label for="enderecoUrlModal" class="control-label">URL</label>
+                                <div class="input-group">
+                                    <input type="text" class="form-control" id="enderecoUrlModal" placeholder="https://exemplo.com.br">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary">Salvar</button>
+                            <button type="cancel" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
         <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
 
         <script type="text/javascript">
@@ -61,6 +87,10 @@
                 }
             });
 
+            function verificarOnline{
+
+            }
+
             function montarLinha(url) {
 var linha = "<tr>" +
                 "<td>" + url.id + "</td>" +
@@ -68,12 +98,53 @@ var linha = "<tr>" +
                 "<td>" + "</td>" +
                 "<td>" + "</td>" +
                 "<td>" +
-              '<button class="btn btn-primary btn-sm" onclick="editar(' + url.id + ')"> Editar </button> ' +
-              '<button class="btn btn-sm btn-danger" onclick="remover(' + url.id + ')"> Apagar </button> ' +
+              '<button class="btn btn-primary btn-sm" onClick="editar('+url.id+')"> Editar </button> ' +
+              '<button class="btn btn-sm btn-danger" onClick="remover(' + url.id + ')"> Apagar </button> ' +
             "</td>" +
             "</tr>";
         return linha;
     }
+
+    function editar(id) {
+        $.getJSON('/api/url/'+id, function(data) {
+            $('#id').val(data.id);
+            $('#enderecoUrlModal').val(data.endereco);
+            $('#dlgUrl').modal('show');
+        });
+    }
+
+    function salvarUrl() {
+        url = {
+            id : $("#id").val(),
+            endereco: $("#enderecoUrlModal").val(),
+        };
+        $.ajax({
+            type: "PUT",
+            url: "/api/url/" + url.id,
+            context: this,
+            data: url,
+            success: function(data) {
+                url = JSON.parse(data);
+                linhas = $("#tabelaUrl>tbody>tr");
+                e = linhas.filter( function(i, e) {
+                    return ( e.cells[0].textContent == url.id );
+                });
+                if (e) {
+                    e[0].cells[0].textContent = url.id;
+                    e[0].cells[1].textContent = url.endereco;
+                }
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+
+    $("#formUrl").submit( function(event){
+        event.preventDefault();
+        salvarUrl();
+        $("#dlgUrl").modal('hide');
+    });
 
     function remover(id) {
         $.ajax({

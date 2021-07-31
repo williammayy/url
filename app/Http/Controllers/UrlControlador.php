@@ -56,7 +56,11 @@ class UrlControlador extends Controller
      */
     public function show($id)
     {
-        //
+        $url=Url::find($id);
+        if(isset($url)){
+            return json_encode($url);
+        }
+        return response('Url não encontrada',404);
     }
 
     /**
@@ -79,7 +83,13 @@ class UrlControlador extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $url = Url::find($id);
+        if (isset($url)) {
+            $url->endereco = $request->endereco;
+            $url->save();
+            return json_encode($url);
+        }
+        return response('Produto não encontrado', 404);
     }
 
     /**
