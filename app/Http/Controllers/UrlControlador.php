@@ -43,7 +43,7 @@ class UrlControlador extends Controller
     public function store(Request $request)
     {
         $url=new Url();
-        $url->endereco=$request->input('enderecoUrl');
+        $url->endereco=strtolower($request->input('enderecoUrl'));
         $url->save();
         return redirect('/');
     }
@@ -132,15 +132,15 @@ class UrlControlador extends Controller
         curl_setopt($ch, CURLOPT_HEADER, true);
         $data = curl_exec($ch);
         if($data === false) {
-            return '<div style="color:red">0</div>';
+            return '<div style="color:red">ERRO</div>';
         }
         else {
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if ($httpcode == 200){
-           return '<div style="color:green">'.$httpcode.'</div>';
+           return '<div style="color:green">OK<br>'.$httpcode.'</div>';
         }
         else{
-            return '<div style="color:red">'.$httpcode.'</div>';
+            return '<div style="color:red">ERRO<br>'.$httpcode.'</div>';
         }
         }
         curl_close($ch);

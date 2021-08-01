@@ -16,14 +16,17 @@
         <div class="container">
 
             <h2 class="text-center">Cadastre sua URL</h2>
-            <form action="/" method="POST">
+            <form action="/" method="POST" id="formURL">
                 @csrf
 
                 <div class="input-group input-group-lg">
-                    <input name="enderecoUrl" type="text" required class="form-control border-primary" placeholder="https://exemplo.com.br">
+                    <input name="enderecoUrl" type="text" id="inputUrl"
+
+                    required class="form-control border-primary" placeholder="https://exemplo.com.br">
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="submit">Cadastrar</button>
                     </div>
+
 
 
                 </div>
@@ -82,6 +85,34 @@
 
         <script type="text/javascript">
 
+            $('#formURL').submit(function validarUrl(){
+
+            var url = document.getElementById('inputUrl').value;
+            var padraoUrl =/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
+            var resultadoUrl = padraoUrl.test(url);
+            if (resultadoUrl==false){
+                alert('Insira uma URL valida');
+                return false;
+            }
+            else{
+                return true;
+            }
+        });
+        $('#formUrl').submit(function validarUrlmodal(){
+
+            var url = document.getElementById('enderecoUrlModal').value;
+            var padraoUrl =/(http(s)?:\/\/.)?(www\.)?[-a-zA-Z0-9@:%._\+~#=]{2,256}\.[a-z]{2,6}\b([-a-zA-Z0-9@:%_\+.~#?&//=]*)/g;
+            var resultadoUrl = padraoUrl.test(url);
+            if (resultadoUrl==false){
+                alert('Insira uma URL valida');
+                return false;
+            }
+            else{
+        event.preventDefault();
+        salvarUrl();
+        $("#dlgUrl").modal('hide');
+        }
+});
 
             $.ajaxSetup({
                 headers:{
@@ -150,12 +181,6 @@ var linha = "<tr>" +
         verificarOnline();
     }
 
-    $("#formUrl").submit( function(event){
-        event.preventDefault();
-        salvarUrl();
-        $("#dlgUrl").modal('hide');
-    });
-
     function remover(id) {
         $.ajax({
             type: "DELETE",
@@ -174,7 +199,7 @@ var linha = "<tr>" +
                 console.log(error);
             }
         });
-        verificarOnline();
+
     }
 
 
