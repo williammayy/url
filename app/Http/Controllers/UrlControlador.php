@@ -128,17 +128,47 @@ class UrlControlador extends Controller
         curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
         curl_setopt($ch, CURLOPT_TIMEOUT, 30);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_NOBODY, true);
+        curl_setopt($ch, CURLOPT_HEADER, true);
         $data = curl_exec($ch);
         if($data === false) {
-            return "0";
+            return '<div style="color:red">0</div>';
         }
         else {
         $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         if ($httpcode == 200){
-           return $httpcode;
+           return '<div style="color:green">'.$httpcode.'</div>';
         }
         else{
-            return $httpcode;
+            return '<div style="color:red">'.$httpcode.'</div>';
+        }
+        }
+        curl_close($ch);
+    }
+
+    public function visualizarPg($id){
+        $endereco=Url::find($id);
+        $url=$endereco->endereco;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $data = curl_exec($ch);
+        if($data === false) {
+            return view('erro');
+        }
+        else {
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        if ($httpcode == 200){
+           echo ' <html lang="pt-br"> <meta charset="UTF-8"><style>
+           img{ display:none;
+           }
+           </style>'. $data;
+        }
+        else{
+            return view('erro');
         }
         }
         curl_close($ch);

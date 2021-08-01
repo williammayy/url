@@ -20,10 +20,12 @@
                 @csrf
 
                 <div class="input-group input-group-lg">
-                    <input name="enderecoUrl" type="text" class="form-control border-primary" placeholder="https://exemplo.com.br">
+                    <input name="enderecoUrl" type="text" required class="form-control border-primary" placeholder="https://exemplo.com.br">
                     <div class="input-group-append">
                       <button class="btn btn-primary" type="submit">Cadastrar</button>
                     </div>
+
+
                 </div>
             </form>
 
@@ -32,13 +34,13 @@
                     <h5 class="card-title">
                         URLs cadastradas
                     </h5>
-                    <table class="table table-ordered table-hover" id="tabelaUrl">
+                    <table class="table table-ordered table-hover text-center" id="tabelaUrl">
                         <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>URL</th>
-                                <th>Status <button class="btn btn-sm btn-outline-dark" onclick="verificarOnline()">Atualizar</button></th>
-                                <th>Visualização</th>
+                                <th>Status  <button class="btn btn-sm btn-outline-warning" onclick="verificarOnline()"><img src="{{asset('img/refresh.png')}}" width="20px" height="20px"></button></th>
+                                <th>Visualização<br>(sem imagens)</th>
                                 <th>Ação</th>
                             </tr>
                         </thead>
@@ -63,7 +65,7 @@
                             <div class="form-group">
                                 <label for="enderecoUrlModal" class="control-label">URL</label>
                                 <div class="input-group">
-                                    <input type="text" class="form-control" id="enderecoUrlModal" placeholder="https://exemplo.com.br">
+                                    <input type="text" class="form-control" required id="enderecoUrlModal" placeholder="https://exemplo.com.br">
                                 </div>
                             </div>
                         </div>
@@ -95,7 +97,6 @@
                     document.getElementById(idhtml).innerHTML = data[i].codigo;
                     }
                 });
-
             }
 
 
@@ -103,8 +104,8 @@
 var linha = "<tr>" +
                 "<td>" + url.id + "</td>" +
                 "<td>" + url.endereco + "</td>" +
-                "<td>" + "<div id= \"verifica"+url.id+"\"></div></td>" +
-                "<td>" + "</td>" +
+                "<td>" + "<div id= \"verifica"+url.id+"\"> ... </div></td>" +
+                "<td>" + '<a target="_blank" href="/visualizar/'+url.id+'"><img src="{{asset('img/lupa.png')}}" width="20px" height="20px"></a>'  + "</td>" +
                 "<td>" +
               '<button class="btn btn-primary btn-sm" onClick="editar('+url.id+')"> Editar </button> ' +
               '<button class="btn btn-sm btn-danger" onClick="remover(' + url.id + ')"> Apagar </button> ' +
@@ -146,6 +147,7 @@ var linha = "<tr>" +
                 console.log(error);
             }
         });
+        verificarOnline();
     }
 
     $("#formUrl").submit( function(event){
@@ -172,6 +174,7 @@ var linha = "<tr>" +
                 console.log(error);
             }
         });
+        verificarOnline();
     }
 
 
