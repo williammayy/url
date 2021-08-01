@@ -107,4 +107,41 @@ class UrlControlador extends Controller
         }
         return response('Url não encontrada',400);
     }
+
+    public function verificaOnline(){
+        $endereco=Url::all();
+
+        $array=[];
+
+            for($i=0;$i<count($endereco);$i++){
+            array_push($array,['id'=>$endereco[$i]->id,'codigo'=>$this->verificaUrl($endereco[$i]->endereco)]);
+    }
+
+        return json_encode($array);
+    }
+
+    private function verificaUrl($urlteste){
+        $url = $urlteste;
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $data = curl_exec($ch);
+        if($data === false) {
+            return "0";
+        }
+        else {
+        $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        if ($httpcode == 200){
+           return $httpcode;
+        }
+        else{
+            return $httpcode;
+        }
+        }
+        curl_close($ch);
+    }
 }
+    ?>

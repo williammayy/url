@@ -37,7 +37,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>URL</th>
-                                <th>Status <button class="btn btn-sm btn-outline-dark ">Atualizar</button></th>
+                                <th>Status <button class="btn btn-sm btn-outline-dark" onclick="verificarOnline()">Atualizar</button></th>
                                 <th>Visualização</th>
                                 <th>Ação</th>
                             </tr>
@@ -87,15 +87,23 @@
                 }
             });
 
-            function verificarOnline{
+            function verificarOnline(){
+                $.getJSON('/api/verificaonline/', function(data) {
+                    console.log(data);
+                    for(i=0;i<data.length;i++){
+                    idhtml="verifica"+data[i].id;
+                    document.getElementById(idhtml).innerHTML = data[i].codigo;
+                    }
+                });
 
             }
+
 
             function montarLinha(url) {
 var linha = "<tr>" +
                 "<td>" + url.id + "</td>" +
                 "<td>" + url.endereco + "</td>" +
-                "<td>" + "</td>" +
+                "<td>" + "<div id= \"verifica"+url.id+"\"></div></td>" +
                 "<td>" + "</td>" +
                 "<td>" +
               '<button class="btn btn-primary btn-sm" onClick="editar('+url.id+')"> Editar </button> ' +
@@ -176,8 +184,11 @@ var linha = "<tr>" +
                 });
             }
 
+
+
             $(function(){
                 carregarUrls();
+                verificarOnline();
             })
         </script>
     </body>
