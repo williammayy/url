@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [UrlControlador::class,'indexView']);
-Route::post('/', [UrlControlador::class,'store']);
-Route::get('/visualizar/{id}', [UrlControlador::class,'visualizarPg']);
+Route::get('/', [UrlControlador::class,'indexView'])->middleware('auth');
+Route::post('/', [UrlControlador::class,'store'])->middleware('auth');
+Route::get('/visualizar/{id}', [UrlControlador::class,'visualizarPg'])->middleware('auth');
+
+Auth::routes();
+
+

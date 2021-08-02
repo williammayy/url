@@ -14,8 +14,21 @@
     </head>
     <body>
         <div class="container">
+            <div class="row" style="margin-bottom:20px;">
+                <div class="col"></div>
+                <div class="col"><h3 class="text-center">@auth {{Auth::user()->name}}@endauth, Cadastre sua URL</h3></div>
+                <div class="col" >
+                    <a class="btn border float-right" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                    {{ __('Sair') }}
+                    </a>
 
-            <h2 class="text-center">Cadastre sua URL</h2>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                    @csrf
+                    </form>
+                </div>
+
+
+                </div>
             <form action="/" method="POST" id="formURL">
                 @csrf
 
@@ -54,6 +67,7 @@
                 </div>
             </div>
         </div>
+
 
         <div class="modal" tabindex="-1" role="dialog" id="dlgUrl">
             <div class="modal-dialog" role="document">

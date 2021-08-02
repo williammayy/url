@@ -7,6 +7,7 @@ use App\Models\Url;
 
 class UrlControlador extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -14,12 +15,14 @@ class UrlControlador extends Controller
      */
     public function indexView()
     {
+        $this->middleware('auth');
         $urls=Url::all();
         return view('inicio', compact('urls'));
     }
 
     public function index()
     {
+        $this->middleware('auth');
         $urls=Url::all();
         return json_encode($urls);
     }
@@ -42,6 +45,7 @@ class UrlControlador extends Controller
      */
     public function store(Request $request)
     {
+        $this->middleware('auth');
         $url=new Url();
         $url->endereco=strtolower($request->input('enderecoUrl'));
         $url->save();
@@ -56,6 +60,7 @@ class UrlControlador extends Controller
      */
     public function show($id)
     {
+        $this->middleware('auth');
         $url=Url::find($id);
         if(isset($url)){
             return json_encode($url);
@@ -83,6 +88,7 @@ class UrlControlador extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->middleware('auth');
         $url = Url::find($id);
         if (isset($url)) {
             $url->endereco = $request->endereco;
@@ -100,6 +106,7 @@ class UrlControlador extends Controller
      */
     public function destroy($id)
     {
+        $this->middleware('auth');
         $url=Url::find($id);
         if (isset($url)){
             $url->delete();
