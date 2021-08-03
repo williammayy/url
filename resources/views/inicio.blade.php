@@ -99,6 +99,12 @@
 
         <script type="text/javascript">
 
+            $.ajaxSetup({
+                headers:{
+                    'X-CSRF-TOKEN':"{{csrf_token()}}"
+                }
+            });
+
             $('#formURL').submit(function validarUrl(){
 
             var url = document.getElementById('inputUrl').value;
@@ -128,11 +134,7 @@
         }
 });
 
-            $.ajaxSetup({
-                headers:{
-                    'X-CSRF-TOKEN':"{{csrf_token()}}"
-                }
-            });
+
 
             function verificarOnline(){
                 $.getJSON('/api/verificaonline/', function(data) {
@@ -146,7 +148,7 @@
 
 
             function montarLinha(url) {
-var linha = "<tr>" +
+            var linha = "<tr>" +
                 "<td>" + url.id + "</td>" +
                 "<td>" + url.endereco + "</td>" +
                 "<td>" + "<div id= \"verifica"+url.id+"\"> ... </div></td>" +
