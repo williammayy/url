@@ -9,6 +9,16 @@
             body{
                 margin-top: 10px;
             }
+            .rodar{animation: is-rotating 1s 4;}
+            @keyframes is-rotating{
+  
+            from {
+                transform: rotate(0turn);
+            }
+
+            to {
+            transform: rotate(1turn);
+            }}
         </style>
 
     </head>
@@ -55,7 +65,7 @@
                             <tr>
                                 <th>ID</th>
                                 <th>URL</th>
-                                <th>Status  <button class="btn btn-sm btn-outline-warning" onclick="verificarOnline()"><img src="{{asset('img/refresh.png')}}" width="20px" height="20px"></button></th>
+                                <th>Status  <button class="btn btn-sm btn-outline-warning" onclick=" rodar();verificarOnline()"><img class="loading" src="{{asset('img/refresh.png')}}" width="20px" height="20px"></button></th>
                                 <th>Visualização<br>(sem imagens)</th>
                                 <th>Ação</th>
                             </tr>
@@ -98,6 +108,12 @@
         <script src="{{asset('js/app.js')}}" type="text/javascript"></script>
 
         <script type="text/javascript">
+        function rodar(){
+        const btn = document.querySelector(".loading");
+
+        btn.classList.add("rodar");
+        setTimeout(function(){btn.classList.remove("rodar") }, 4000);
+        }
 
             $.ajaxSetup({
                 headers:{
